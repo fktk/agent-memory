@@ -34,10 +34,10 @@ if [[ "${1:-}" == "--uninstall" ]]; then
         "$BIN_DIR/memory-delete.sh"
   success "Scripts removed from $BIN_DIR"
 
-  rm -f "$COPILOT_SKILLS_DIR/memory-write.md" \
-        "$COPILOT_SKILLS_DIR/memory-search.md" \
-        "$COPILOT_SKILLS_DIR/memory-status.md" \
-        "$COPILOT_SKILLS_DIR/memory-delete.md"
+  rm -rf "$COPILOT_SKILLS_DIR/memory-write" \
+         "$COPILOT_SKILLS_DIR/memory-search" \
+         "$COPILOT_SKILLS_DIR/memory-status" \
+         "$COPILOT_SKILLS_DIR/memory-delete"
   success "Skills removed from $COPILOT_SKILLS_DIR"
 
   warn "Memory files in $MEMORY_DIR are preserved."
@@ -85,9 +85,9 @@ success "Copilot config directory: $(dirname "$COPILOT_INSTRUCTIONS")"
 # --- step 3: install scripts ---
 info "Installing scripts..."
 
-for script in memory-write.sh memory-search.sh memory-status.sh memory-delete.sh; do
-  src="$SCRIPT_DIR/scripts/$script"
-  dst="$BIN_DIR/$script"
+for skill in memory-write memory-search memory-status memory-delete; do
+  src="$SKILLS_DIR/$skill/scripts/${skill}.sh"
+  dst="$BIN_DIR/${skill}.sh"
 
   if [[ ! -f "$src" ]]; then
     warn "Script not found: $src (skipping)"
@@ -147,16 +147,17 @@ info "Installing Copilot skills..."
 
 mkdir -p "$COPILOT_SKILLS_DIR"
 
-for skill in memory-write.md memory-search.md memory-status.md memory-delete.md; do
+for skill in memory-write memory-search memory-status memory-delete; do
   src="$SKILLS_DIR/$skill"
   dst="$COPILOT_SKILLS_DIR/$skill"
 
-  if [[ ! -f "$src" ]]; then
+  if [[ ! -d "$src" ]]; then
     warn "Skill not found: $src (skipping)"
     continue
   fi
 
-  cp "$src" "$dst"
+  cp -r "$src" "$dst"
+  chmod +x "$dst/scripts/"*.sh 2>/dev/null || true
   success "Skill installed: $dst"
 done
 
@@ -180,7 +181,7 @@ echo "  memory-delete.sh <filename-or-title>"
 echo ""
 echo "Installed to:"
 echo "  Scripts: $BIN_DIR/memory-*.sh"
-echo "  Skills:  $COPILOT_SKILLS_DIR/memory-*.md"
+echo "  Skills:  $COPILOT_SKILLS_DIR/memory-*/SKILL.md"
 echo "  Rules:   $COPILOT_INSTRUCTIONS"
 echo "  Memory:  $MEMORY_DIR"
 echo ""

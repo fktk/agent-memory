@@ -10,7 +10,7 @@ qmd のハイブリッド検索（BM25 + ベクトル + リランキング）で
 ## コマンド
 
 ```bash
-~/.local/bin/memory-search.sh "<クエリ>" [--limit N] [--min-score SCORE] [--json]
+./scripts/memory-search.sh "<クエリ>" [--limit N] [--min-score SCORE] [--json]
 ```
 
 ## 引数・オプション
@@ -27,16 +27,16 @@ qmd のハイブリッド検索（BM25 + ベクトル + リランキング）で
 
 ```bash
 # タスク開始時の想起（推奨パターン）
-~/.local/bin/memory-search.sh "TypeScript error handling patterns"
+./scripts/memory-search.sh "TypeScript error handling patterns"
 
 # 高スコアの記憶のみ
-~/.local/bin/memory-search.sh "performance optimization" --min-score 0.5
+./scripts/memory-search.sh "performance optimization" --min-score 0.5
 
 # JSON出力（プログラム的な利用）
-~/.local/bin/memory-search.sh "authentication" --json --limit 5
+./scripts/memory-search.sh "authentication" --json --limit 5
 
 # 件数を絞る
-~/.local/bin/memory-search.sh "React hooks" --limit 3
+./scripts/memory-search.sh "React hooks" --limit 3
 ```
 
 ## 出力フォーマット
