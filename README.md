@@ -8,10 +8,9 @@ LLMエージェント（GitHub Copilot）が自律的に記憶を書き込み・
 ```
 ┌─────────────────────┐     ┌──────────────────────┐     ┌─────────────────┐
 │  Copilot Agent      │────▶│  memory-search.sh    │────▶│  qmd (BM25 +    │
-│                     │     │  memory-write.sh     │     │  Vector +       │
-│  copilot-           │     │  memory-status.sh    │     │  Reranking)     │
-│  instructions.md    │     │  memory-delete.sh    │     │                 │
-│  でルール定義        │     └──────────────────────┘     └────────┬────────┘
+│  copilot-           │     │  memory-write.sh     │     │  Vector +       │
+│  instructions.md    │     └──────────────────────┘     │  Reranking)     │
+│  でルール定義        │                                  └────────┬────────┘
 └─────────────────────┘                                           │
                                                         ┌────────▼────────┐
                                                         │ ~/.local/share/ │
@@ -104,17 +103,7 @@ memory-search.sh "error handling" --json --limit 5
 memory-search.sh "performance" --min-score 0.5
 ```
 
-### ステータス確認
 
-```bash
-memory-status.sh [--json]
-```
-
-### 記憶の削除
-
-```bash
-memory-delete.sh "<ファイル名またはタイトル>"
-```
 
 ## 記憶ファイルフォーマット
 

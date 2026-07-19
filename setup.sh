@@ -35,9 +35,7 @@ if [[ "${1:-}" == "--uninstall" ]]; then
   success "Scripts removed from $BIN_DIR"
 
   rm -rf "$COPILOT_SKILLS_DIR/memory-write" \
-         "$COPILOT_SKILLS_DIR/memory-search" \
-         "$COPILOT_SKILLS_DIR/memory-status" \
-         "$COPILOT_SKILLS_DIR/memory-delete"
+         "$COPILOT_SKILLS_DIR/memory-search"
   success "Skills removed from $COPILOT_SKILLS_DIR"
 
   warn "Memory files in $MEMORY_DIR are preserved."
@@ -85,7 +83,7 @@ success "Copilot config directory: $(dirname "$COPILOT_INSTRUCTIONS")"
 # --- step 3: install scripts ---
 info "Installing scripts..."
 
-for skill in memory-write memory-search memory-status memory-delete; do
+for skill in memory-write memory-search; do
   src="$SKILLS_DIR/$skill/scripts/${skill}.sh"
   dst="$BIN_DIR/${skill}.sh"
 
@@ -147,7 +145,7 @@ info "Installing Copilot skills..."
 
 mkdir -p "$COPILOT_SKILLS_DIR"
 
-for skill in memory-write memory-search memory-status memory-delete; do
+for skill in memory-write memory-search; do
   src="$SKILLS_DIR/$skill"
   dst="$COPILOT_SKILLS_DIR/$skill"
 
@@ -176,8 +174,6 @@ echo ""
 echo "Available commands:"
 echo "  memory-write.sh  <title> <category> <tags> <content>"
 echo "  memory-search.sh <query> [--limit N] [--min-score SCORE]"
-echo "  memory-status.sh [--json]"
-echo "  memory-delete.sh <filename-or-title>"
 echo ""
 echo "Installed to:"
 echo "  Scripts: $BIN_DIR/memory-*.sh"
@@ -188,5 +184,4 @@ echo ""
 echo "Try it out:"
 echo "  memory-write.sh \"Test memory\" knowledge \"test\" \"This is a test memory.\""
 echo "  memory-search.sh \"test\""
-echo "  memory-status.sh"
 
