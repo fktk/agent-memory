@@ -1,0 +1,9 @@
+{
+  "name": "agent-memory",
+  "version": "1.0.0",
+  "description": "APM project for agent-memory",
+  "author": {
+    "name": "Takefumi Fukumoto"
+  },
+  "license": "MIT"
+}

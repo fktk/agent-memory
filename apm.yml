@@ -1,0 +1,16 @@
+name: agent-memory
+version: 1.0.0
+description: APM project for agent-memory
+author: Takefumi Fukumoto
+# Which agent platforms to deploy to.
+# Resolution order: --target flag > this field > auto-detect from filesystem.
+# Accepted values: agent-skills, antigravity, claude, codex, copilot, cursor, gemini, kiro, opencode, windsurf
+targets:
+- copilot
+dependencies:
+  apm: []
+  mcp: []
+includes: auto
+devDependencies:
+  apm: []
+scripts: {}

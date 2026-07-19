@@ -1,0 +1,16 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Node (qmd related)
+node_modules/
+
+# qmd index (local only)
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
