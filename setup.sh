@@ -8,7 +8,9 @@ MEMORY_DIR="${AGENT_MEMORY_DIR:-$HOME/.local/share/qmd/docs}"
 COLLECTION="${AGENT_MEMORY_COLLECTION:-agent-memory}"
 BIN_DIR="$HOME/.local/bin"
 RULES_FILE="$SCRIPT_DIR/rules/copilot-memory-rules.md"
+SKILLS_DIR="$SCRIPT_DIR/skills"
 COPILOT_INSTRUCTIONS="$HOME/.github/copilot-instructions.md"
+COPILOT_SKILLS_DIR="$HOME/.github/copilot/skills"
 
 # Colors
 RED='\033[0;31m'
@@ -31,6 +33,12 @@ if [[ "${1:-}" == "--uninstall" ]]; then
         "$BIN_DIR/memory-status.sh" \
         "$BIN_DIR/memory-delete.sh"
   success "Scripts removed from $BIN_DIR"
+
+  rm -f "$COPILOT_SKILLS_DIR/memory-write.md" \
+        "$COPILOT_SKILLS_DIR/memory-search.md" \
+        "$COPILOT_SKILLS_DIR/memory-status.md" \
+        "$COPILOT_SKILLS_DIR/memory-delete.md"
+  success "Skills removed from $COPILOT_SKILLS_DIR"
 
   warn "Memory files in $MEMORY_DIR are preserved."
   warn "copilot-instructions.md was NOT modified. Remove the 'Agent Memory System' section manually if desired."
@@ -134,7 +142,25 @@ else
   fi
 fi
 
-# --- step 6: initial embed ---
+# --- step 6: install copilot skills ---
+info "Installing Copilot skills..."
+
+mkdir -p "$COPILOT_SKILLS_DIR"
+
+for skill in memory-write.md memory-search.md memory-status.md memory-delete.md; do
+  src="$SKILLS_DIR/$skill"
+  dst="$COPILOT_SKILLS_DIR/$skill"
+
+  if [[ ! -f "$src" ]]; then
+    warn "Skill not found: $src (skipping)"
+    continue
+  fi
+
+  cp "$src" "$dst"
+  success "Skill installed: $dst"
+done
+
+# --- step 7: initial embed ---
 info "Running initial embedding..."
 qmd embed 2>/dev/null && \
   success "Index ready" || \
@@ -152,10 +178,14 @@ echo "  memory-search.sh <query> [--limit N] [--min-score SCORE]"
 echo "  memory-status.sh [--json]"
 echo "  memory-delete.sh <filename-or-title>"
 echo ""
-echo "Memory directory: $MEMORY_DIR"
-echo "Copilot rules:    $COPILOT_INSTRUCTIONS"
+echo "Installed to:"
+echo "  Scripts: $BIN_DIR/memory-*.sh"
+echo "  Skills:  $COPILOT_SKILLS_DIR/memory-*.md"
+echo "  Rules:   $COPILOT_INSTRUCTIONS"
+echo "  Memory:  $MEMORY_DIR"
 echo ""
 echo "Try it out:"
 echo "  memory-write.sh \"Test memory\" knowledge \"test\" \"This is a test memory.\""
 echo "  memory-search.sh \"test\""
 echo "  memory-status.sh"
+
