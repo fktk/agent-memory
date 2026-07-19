@@ -48,7 +48,7 @@ chmod +x setup.sh
 
 セットアップスクリプトが以下を実行します:
 1. `~/.local/share/qmd/docs/` ディレクトリを作成
-2. スクリプトを `~/.local/bin/` にコピー
+2. AgentSkills として `~/.github/copilot/skills/` にスキルディレクトリをインストール
 3. qmd コレクション `agent-memory` を登録
 4. `~/.github/copilot-instructions.md` にルールを追記
 5. 初回エンベディングを実行
@@ -102,8 +102,6 @@ memory-search.sh "error handling" --json --limit 5
 # 高スコアのみ
 memory-search.sh "performance" --min-score 0.5
 ```
-
-
 
 ## 記憶ファイルフォーマット
 

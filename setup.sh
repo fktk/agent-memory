@@ -74,36 +74,10 @@ info "Creating directories..."
 mkdir -p "$MEMORY_DIR"
 success "Memory directory: $MEMORY_DIR"
 
-mkdir -p "$BIN_DIR"
-success "Script directory: $BIN_DIR"
-
 mkdir -p "$(dirname "$COPILOT_INSTRUCTIONS")"
 success "Copilot config directory: $(dirname "$COPILOT_INSTRUCTIONS")"
 
-# --- step 3: install scripts ---
-info "Installing scripts..."
 
-for skill in memory-write memory-search; do
-  src="$SKILLS_DIR/$skill/scripts/${skill}.sh"
-  dst="$BIN_DIR/${skill}.sh"
-
-  if [[ ! -f "$src" ]]; then
-    warn "Script not found: $src (skipping)"
-    continue
-  fi
-
-  cp "$src" "$dst"
-  chmod +x "$dst"
-  success "Installed: $dst"
-done
-
-# Ensure ~/.local/bin is in PATH
-if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
-  warn "$BIN_DIR is not in your PATH."
-  echo "  Add this to your shell profile (~/.bashrc, ~/.zshrc, etc.):"
-  echo "    export PATH=\"\$HOME/.local/bin:\$PATH\""
-  echo ""
-fi
 
 # --- step 4: register qmd collection ---
 info "Registering qmd collection..."
@@ -176,7 +150,7 @@ echo "  memory-write.sh  <title> <category> <tags> <content>"
 echo "  memory-search.sh <query> [--limit N] [--min-score SCORE]"
 echo ""
 echo "Installed to:"
-echo "  Scripts: $BIN_DIR/memory-*.sh"
+
 echo "  Skills:  $COPILOT_SKILLS_DIR/memory-*/SKILL.md"
 echo "  Rules:   $COPILOT_INSTRUCTIONS"
 echo "  Memory:  $MEMORY_DIR"

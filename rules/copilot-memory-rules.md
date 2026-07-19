@@ -6,9 +6,7 @@
 
 タスクを開始する前に、関連する過去の記憶を確認する:
 
-```bash
-~/.local/bin/memory-search.sh "<タスクの要約>"
-```
+👉 **`memory-search` スキルを使用すること**
 
 ### 書き込み（自動発火条件）
 
@@ -19,8 +17,4 @@
 - **preference**: ユーザーがスタイルや技術選択の好みを示した時
 - **明示的指示**: ユーザーが「覚えて」「記憶して」等と指示した時
 
-```bash
-~/.local/bin/memory-write.sh "<タイトル>" <category> "<tags>" "<内容>"
-```
-
-詳細な使い方はスキル `memory-write`, `memory-search`, `memory-status`, `memory-delete` を参照。
+👉 **`memory-write` スキルを使用すること**
