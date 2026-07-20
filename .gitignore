@@ -14,3 +14,9 @@ node_modules/
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm
+
+# APM build artifacts
+build/
+apm.lock.yaml
+.agents/
+.github/plugin/

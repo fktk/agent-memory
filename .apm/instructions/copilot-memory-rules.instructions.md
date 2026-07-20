@@ -1,3 +1,8 @@
+---
+description: Agent Memory System rules — recall and persist lessons, knowledge, and user preferences via the memory-search / memory-write skills.
+applyTo: "**"
+---
+
 ## Agent Memory System
 
 エージェントメモリーシステムが有効です。教訓・知識・好みを `~/.local/share/qmd/docs/` に蓄積・検索します。

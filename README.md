@@ -59,6 +59,39 @@ chmod +x setup.sh
 ./setup.sh --uninstall
 ```
 
+### APM 経由でインストール（推奨・copilot 向け）
+
+このリポジトリは [APM](https://microsoft.github.io/apm/) パッケージとして配布可能です。
+copilot 向けには `setup.sh` は不要です。以下の APM フローで完結します。
+
+```bash
+# パッケージをビルド（build/agent-memory-<version>.zip を生成）
+apm pack --target copilot --archive
+
+# 任意のプロジェクトでインストール（skills + ルールを自動展開）
+cd /path/to/your/project
+apm install /path/to/agent-memory/build/agent-memory-1.0.0.zip --target copilot
+```
+
+`apm install` により `skills/` → `.agents/skills/`、`.apm/instructions/` →
+`.github/instructions/` へ展開されます。
+
+#### qmd バックエンドの初期化
+
+skills/ルールの展開とは別に、[qmd](https://github.com/tobi/qmd) のコレクション登録と
+初回エンベディングが必要です（qmd の事前インストールが必要）。
+このリポジトリを clone している場合は以下を実行してください:
+
+```bash
+./scripts/init-memory.sh
+```
+
+> `apm run init-memory` は本リポジトリ（producer 側）で定義したスクリプトで、
+> clone 環境から実行できます。zip のみの受け取りの場合は上記スクリプトをご利用ください。
+>
+> `setup.sh` は APM 非対応環境や copilot 以外の手動セットアップ用に残しています。
+> copilot ユーザーは上記 APM フローを使ってください。
+
 ## 使い方
 
 ### 記憶の書き込み
